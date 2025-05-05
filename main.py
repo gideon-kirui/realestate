@@ -11,6 +11,9 @@ from screens.dashbord import DashboardScreen
 from screens.properties import PropertiesScreen
 from screens.accounts import AccountsScreen
 from screens.finance import FinanceScreen
+from screens.settings import SettingsScreen
+from screens.chats import ChatScreen
+from screens.admin import AdminAccountScreen
 
 
 KV = '''
@@ -24,65 +27,96 @@ MDScreen:
     md_bg_color: "darkgrey"
     MDBoxLayout:
         orientation: 'vertical'
-        MDBoxLayout:
-            orientation: "vertical"
+        MDFloatLayout:
             size_hint: 1, .07
             md_bg_color: "#00BFFF"
+
+            # Logo Button
+            MDIconButton:
+                icon: "logo.png"
+                adaptive_size: True
+                icon_size: "40dp"
+                on_release: app.change_screen('dashboard')
+                pos_hint: {"top": 1, "right": 0.05}
+
+            # Title Label
+            MDLabel:
+                text: "Real Estate Management System"
+                halign: "center"
+                theme_text_color: "Custom"
+                text_color: 1, 1, 1, 1
+                font_style: "H6"
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+            # Icon Buttons on the right
             MDBoxLayout:
-                adaptive_height: True
-                padding: "10dp", "1dp"
-                MDIconButton:
-                    icon: "logo.png"
-                    adaptive_size: True
-                    icon_size: "24dp"
-                    
-                MDLabel:
-                    text: "Real Estate Management System"
-                    halign: "center"   
-                    
-                MDBoxLayout:
-                    orientation: "horizontal"
-                    adaptive_size: True
-                    TooltipMDIconButton:
-                        icon: "message"
-                        icon_size: "24sp"
-                        tooltip_text: "Messages"
-                    TooltipMDIconButton:
-                        icon: "account-circle"
-                        icon_size: "24sp"
-                        tooltip_text: "Admin"         
-                    TooltipMDIconButton:
-                        icon: "exit-to-app"
-                        icon_size: "24sp"
-                        tooltip_text: "Logout"
+                orientation: "horizontal"
+                size_hint: None, None
+                height: self.minimum_height
+                width: self.minimum_width
+                pos_hint: {"top": 0.95, "right": 1}
+                spacing: "12dp"
+
+                TooltipMDIconButton:
+                    icon: "message"
+                    icon_size: "24sp"
+                    tooltip_text: "Messages"
+                    on_release: app.change_screen('chats')
+
+                TooltipMDIconButton:
+                    icon: "account-circle"
+                    icon_size: "24sp"
+                    tooltip_text: "Admin"
+                    on_release: app.change_screen('admin')
+
+                TooltipMDIconButton:
+                    icon: "exit-to-app"
+                    icon_size: "24sp"
+                    tooltip_text: "Logout"
 
         MDBoxLayout:
             orientation: "horizontal"
             size_hint: 1, .88
             md_bg_color: "white"
-            
             MDBoxLayout:
                 adaptive_width: True
-                MDNavigationRail:
-                    md_bg_color: "#00BFFF"
-                    selected_color_background: "#e7e4c0"
-                    ripple_color_item: "#e7e4c0"
-                    MDNavigationRailItem:
+                md_bg_color: "#00BFFF"
+                MDRelativeLayout:
+                    MDIconButton:
                         icon: "view-dashboard"
+                        adaptive_size: True
+                        icon_size: "24dp"
+                        pos_hint: {"top": .95, "right": .7}
                         on_release: app.change_screen('dashboard')
-                    MDNavigationRailItem:
-                        icon: "city"
+
+                    MDIconButton:
+                        icon: "home-city"
+                        adaptive_size: True
+                        icon_size: "24dp"
+                        pos_hint: {"top": .85, "right": .7}
                         on_release: app.change_screen('properties')
-                    MDNavigationRailItem:
-                        icon: "home-account"
+
+                    MDIconButton:
+                        icon: "account-multiple"
+                        adaptive_size: True
+                        icon_size: "24dp"
+                        pos_hint: {"top": .75, "right": .7}
                         on_release: app.change_screen('accounts')
-                    MDNavigationRailItem:
-                        icon: "account-key"
-                        on_release: app.change_screen('accounts')
-                    MDNavigationRailItem:
-                        icon: "cash"
+
+                    MDIconButton:
+                        icon: "wallet"
+                        adaptive_size: True
+                        icon_size: "24dp"
+                        pos_hint: {"top": .65, "right": .7}
                         on_release: app.change_screen('finance')
-            
+
+                    MDIconButton:
+                        icon: "cog"
+                        adaptive_size: True
+                        icon_size: "24dp"
+                        pos_hint: {"top": .1, "right": .7}
+                        on_release: app.change_screen('settings')
+
             ScreenManager:
                 id: screen_manager
                 DashboardScreen:
@@ -93,6 +127,12 @@ MDScreen:
                     name: 'accounts'
                 FinanceScreen:
                     name: 'finance'
+                ChatScreen:
+                    name: 'chats'
+                AdminAccountScreen:
+                    name: 'admin'
+                SettingsScreen:
+                    name: 'settings'
 
         MDBoxLayout:
             orientation: "vertical"

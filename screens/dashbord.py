@@ -685,26 +685,45 @@ d_kv = '''
                 size: "600dp", "290dp"
                 md_bg_color: 0.95, 0.95, 0.95, 1
                 MDRelativeLayout:
-                    MDCard:
+                    MDLabel:
+                        text: "Performance for the month Ending 31/04/2025"
                         adaptive_size: True
-                        radius: [5, 5, 5, 5]
+                        color: (0.0, 0.0, 0.545)
+                        bold: True
+                        font_size: "14dp"
                         pos_hint: {"top": .98, "right": .53}
-                        md_bg_color: (0.0, 0.0, 0.545)
 
-                        MDBoxLayout:
-                            orientation: "horizontal"
-                            adaptive_size: True  
-                            padding: "5dp"
-                            MDLabel:
-                                text: "Performance for the month Ending 31/04/2025"
-                                adaptive_size: True
-                                color: (1, 1, 1, 1)
-                                bold: True
-                                font_size: "14dp"
+                    MDBoxLayout:
+                        orientation: "horizontal"
+                        spacing: "3dp"
+                        pos_hint: {"top": .98, "right": .8}
+                        size_hint: None, None
+                        height: dp(40)
+                        padding: dp(3)
+                        MDIconButton:
+                            icon: "chart-line"
+                            on_release: root.ids.graph_area.set_graph_type("line")
+                            
+
+                        MDIconButton:
+                            icon: "chart-bar"
+                            on_release: root.ids.graph_area.set_graph_type("bar")
+                            
+
+                        MDIconButton:
+                            icon: "chart-pie"
+                            on_release: root.ids.graph_area.set_graph_type("pie")
+                            
+
+                        MDIconButton:
+                            icon: "chart-donut"
+                            on_release: root.ids.graph_area.set_graph_type("donut")
+                            
+
                     
                     GraphArea:
                         size_hint: 1, None
-                        height: self.parent.height - dp(50)  # Take the remaining height after title
+                        height: self.parent.height - dp(50) 
                         pos_hint: {"top": 0.85}
 
             MDCard:
@@ -931,39 +950,68 @@ class CircularProgressBarLp(AnchorLayout):
             Clock.unschedule(self.percent_counter)
 
 class GraphArea(AnchorLayout):
+    graph_type = StringProperty("bar")
+
     def on_kv_post(self, base_widget):
+        self.draw_graph(self.graph_type)
+
+    def draw_graph(self, graph_type):
+        self.clear_widgets()
         weeks = ['Week 1', 'Week 2', 'Week 3', 'Week 4']
-        performance = [65, 80, 75, 90]  # Example percentages
 
-        # Create a figure and axes
+        # Simulated performance data for multiple items
+        item_data = {
+            'Properties': [100, 70, 45, 8],
+            'Rent': [0, 65, 90, 100],
+            'tenants': [55, 60, 65, 70],
+            '': [55, 60, 65, 70],
+        }
+
         fig, ax = plt.subplots(figsize=(5, 3))
-
-        # Plot the line graph with markers
-        ax.plot(weeks, performance, marker='o', linestyle='-', color='blue', label='Performance')
-
-        # Fill the area below the line with a color
-        # ax.fill_between(weeks, performance, color='blue', alpha=0.3)
-
-        # Clean up the figure
-        fig.patch.set_facecolor('none')  # Remove figure background
-
-        # Remove the borders (spines)
+        fig.patch.set_facecolor('none')
         for spine in ax.spines.values():
             spine.set_visible(False)
-
-        # Remove grid
         ax.grid(False)
+        ax.tick_params(left=True, bottom=False, labelleft=True, labelbottom=True)
 
-        # Remove ticks and labels for better aesthetics
-        ax.tick_params(left=False, bottom=False, labelleft=False, labelbottom=True)
+        if graph_type == "line":
+            for label, values in item_data.items():
+                ax.plot(weeks, values, marker='o', label=label)
+            ax.set_ylabel('Performance (%)')
+            ax.set_xlabel('Weeks')
+            ax.legend()
 
-        # Labeling the graph
-        ax.set_xlabel('Weeks')
-        ax.set_ylabel('Performance (%)')
+        elif graph_type == "bar":
+            import numpy as np
+            x = np.arange(len(weeks))
+            width = 0.15
 
-        # Layout tight to prevent label clipping
+            for i, (label, values) in enumerate(item_data.items()):
+                ax.bar(x + i * width, values, width=width, label=label)
+
+            ax.set_xticks(x + width)
+            ax.set_xticklabels(weeks)
+            ax.set_ylabel('Performance (%)')
+            ax.legend()
+
+        elif graph_type == "pie":
+            # Sum each item's total performance
+            total_performance = {label: sum(values) for label, values in item_data.items()}
+            labels = list(total_performance.keys())
+            sizes = list(total_performance.values())
+            ax.pie(sizes, labels=labels, autopct='%1.1f%%', colors=['#FF9999', '#66B3FF', '#99FF99'])
+
+        elif graph_type == "donut":
+            total_performance = {label: sum(values) for label, values in item_data.items()}
+            labels = list(total_performance.keys())
+            sizes = list(total_performance.values())
+            wedges, texts, autotexts = ax.pie(sizes, wedgeprops=dict(width=0.5), labels=labels, autopct='%1.1f%%')
+            ax.set(aspect="equal")
+
         fig.tight_layout()
+        self.add_widget(FigureCanvasKivyAgg(fig))
 
-        # Convert to Kivy canvas and add to widget
-        graph = FigureCanvasKivyAgg(fig)
-        self.add_widget(graph)
+    def set_graph_type(self, gtype):
+        if gtype != self.graph_type:
+            self.graph_type = gtype
+            self.draw_graph(gtype)
