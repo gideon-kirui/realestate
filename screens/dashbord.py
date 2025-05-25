@@ -431,14 +431,14 @@ d_kv = '''
                         md_bg_color: "#ffffff"
                         MDRelativeLayout:
                             MDLabel:
-                                text: "Employees"
+                                text: "Vochures"
                                 adaptive_size: True
                                 color: "black"
                                 bold: True
                                 pos_hint: {"top": .95, "x": .02}
                             
                             MDIcon:
-                                icon: "account-multiple"
+                                icon: "ticket-percent"
                                 font_size: "28dp"
                                 adaptive_size: True
                                 pos_hint: {"top": .95, "right": .95}
@@ -465,7 +465,7 @@ d_kv = '''
                             MDCard:
                                 adaptive_size: True
                                 radius: [5, 5, 5, 5]
-                                pos_hint: {"top": .2, "right": .2}
+                                pos_hint: {"top": .2, "right": .24}
                                 md_bg_color: (0, 0, 1, 1)
 
                                 MDBoxLayout:
@@ -473,7 +473,7 @@ d_kv = '''
                                     adaptive_size: True  
                                     padding: "3dp"
                                     MDLabel:
-                                        text: "Active"
+                                        text: "Approved"
                                         adaptive_size: True
                                         color: (1, 1, 1, 1)
                                         bold: True
@@ -506,7 +506,7 @@ d_kv = '''
                                     adaptive_size: True  
                                     padding: "3dp"
                                     MDLabel:
-                                        text: "On Leave"
+                                        text: "Pending"
                                         adaptive_size: True
                                         color: (0, 0, 0, 1)
                                         bold: True
@@ -532,7 +532,7 @@ d_kv = '''
                             MDCard:
                                 adaptive_size: True
                                 radius: [5, 5, 5, 5]
-                                pos_hint: {"top": .2, "right": .95}
+                                pos_hint: {"top": .2, "right": .92}
                                 md_bg_color: (1, 0, 0, 1)
 
                                 MDBoxLayout:
@@ -540,7 +540,7 @@ d_kv = '''
                                     adaptive_size: True  
                                     padding: "3dp"
                                     MDLabel:
-                                        text: "Suspended"
+                                        text: "Rejected"
                                         adaptive_size: True
                                         color: (1, 1, 1, 1)
                                         bold: True

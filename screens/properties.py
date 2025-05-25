@@ -85,22 +85,126 @@ d_kv = '''
                 spacing: "10dp"
 
                 MDRelativeLayout:
-                    size_hint_y: None
-                    height: "200dp"  # Give it enough space for image + label
-
                     MDLabel:
-                        text: "LandLords"
+                        text: "More details for property 00123"
                         adaptive_size: True
                         color: "black"
                         bold: True
-                        pos_hint: {"top": 1, "center_x": 0.5}
+                        pos_hint: {"top": .98, "center_x": 0.3}
 
-                    FitImage:
-                        source: "./p.png"
+                    MDRectangleFlatIconButton:
+                        icon: "pencil"
+                        text: "Edit Property"
+                        theme_text_color: "Custom"
+                        text_color: "black"
+                        line_color: "#00BFFF"
+                        theme_icon_color: "Custom"
+                        icon_color: "white"
+                        md_bg_color: "#00BFFF"
+                        pos_hint: {"top": 1, "center_x": 0.85}
+
+                    AsyncImage:
+                        source: 'screens/rm.jpeg'
                         size_hint: None, None
-                        size: "300dp", "180dp"
-                        radius: [12]
-                        pos_hint: {"top": 0.75, "center_x": 0.5}
+                        size: "430dp", "200dp"
+                        radius: [20]
+                        pos_hint: {"top": 0.9, "center_x": 0.5}
+
+                    MDGridLayout:
+                        cols: 2
+                        adaptive_size: True
+                        spacing: "10dp"
+                        pos_hint: {"top": 0.53, "center_x": 0.5}
+                        MDCard:
+                            size_hint: None, None
+                            size: "210dp", "300dp"
+                            md_bg_color: 1, 1, 1, 1
+                            MDRelativeLayout:
+                                MDBoxLayout:
+                                    orientation: 'horizontal'
+                                    adaptive_size: True
+                                    pos_hint: {"top": .9, "center_x": 0.4}
+                                    spacing: "10dp"
+                                    MDLabel:
+                                        text: "Price:"
+                                        adaptive_size: True
+                                        color: "black"
+                                        bold: True
+                                    MDLabel:
+                                        text: "Ksh.120,000"
+                                        adaptive_size: True
+                                        color: "grey"
+                                        font_size: "12sp"
+
+                                MDBoxLayout:
+                                    orientation: 'horizontal'
+                                    adaptive_size: True
+                                    pos_hint: {"top": .75, "center_x": 0.45}
+                                    spacing: "10dp"
+                                    MDLabel:
+                                        text: "Category:"
+                                        adaptive_size: True
+                                        color: "black"
+                                        bold: True
+                                    MDLabel:
+                                        text: "Appartment"
+                                        adaptive_size: True
+                                        color: "grey"
+                                        font_size: "12sp"
+
+                                MDRaisedButton:
+                                    text: "Download Agreement Form"
+                                    on_release: app.open_file_chooser()
+                                    adaptive_size: True
+                                    font_size: "10sp"
+                                    pos_hint: {"center_x": .43, "center_y": .55}
+                                    elevation: 0
+                                
+                                MDRaisedButton:
+                                    text: "Download Terms and Conditions"
+                                    on_release: app.open_file_chooser()
+                                    adaptive_size: True
+                                    font_size: "10sp"
+                                    pos_hint: {"center_x": .475, "center_y": .35}
+                                    elevation: 0
+                                
+                                MDSeparator:
+                                    height: "1dp"
+                                    color: 0, 1, 0, 1
+                                    pos_hint: {"center_x": 0.5, "center_y": .2}
+
+                                MDBoxLayout:
+                                    orientation: 'horizontal'
+                                    adaptive_size: True
+                                    pos_hint: {"top": .15, "center_x": 0.45}
+                                    spacing: "10dp"
+                                    MDLabel:
+                                        text: "Care Taker:"
+                                        adaptive_size: True
+                                        color: "black"
+                                        bold: True
+                                    MDLabel:
+                                        text: "Fred Mwahi"
+                                        adaptive_size: True
+                                        color: "grey"
+                                        font_size: "12sp"
+
+                        MDCard:
+                            size_hint: None, None
+                            size: "210dp", "300dp"
+                            padding: "10dp"
+                            md_bg_color: 1, 1, 1, 1
+                            MDLabel:
+                                text: "This is a very long paragraph that describes in detail the content of your application. It can span multiple lines and will automatically \
+                                    wrap based on the width of its container.\
+                                        This is a very long paragraph that describes in detail the content of your application. It can span multiple lines and will automatically"
+                                halign: "left"  
+                                theme_text_color: "Primary"
+                                size_hint_x: 0.7
+                                pos_hint: {"top": .95, "center_x": 0.5}
+                                text_size: self.width, None
+                                adaptive_height: True
+                                font_size: "12sp"
 
 
 <Tab>:
@@ -133,6 +237,8 @@ class PropertiesScreen(MDScreen):
             {"text": "Leased", "on_release": lambda x="Leased": self.filter_table(x)},
             {"text": "Empty", "on_release": lambda x="Empty": self.filter_table(x)},
             {"text": "On Renovation", "on_release": lambda x="Renovation": self.filter_table(x)},
+            {"text": "Available for sale", "on_release": lambda x="For Sale": self.filter_table(x)},
+            {"text": "Available for lease", "on_release": lambda x="For Lease": self.filter_table(x)},
         ]
         self.filter_menu = MDDropdownMenu(
             caller=self.ids.filter_button,
@@ -155,6 +261,10 @@ class PropertiesScreen(MDScreen):
                 ("00234", "Green Acres", "Uptown", "Empty"),
                 ("00564", "Blue Horizon", "Riverside", "On Renovation"),
                 ("00873", "Palm Heights", "Midtown", "Occupied"),
+                ("00890", "By Grace homes", "Rvist", "For Lease"),
+                ("00750", "Kiamunyi Phase II", "Kiamunyi", "For Sale"),
+                ("00750", "Blessed Hostels", "Kabarak", "For rent"),
+                ("00750", "Sweet Banana", "Freehold", "Occupied"),
             ]
         elif category == "Sale":
             row_data = [
@@ -172,6 +282,7 @@ class PropertiesScreen(MDScreen):
         table = MDDataTable(
             size_hint=(1, 1),
             use_pagination=True,
+            rows_num=7,
             column_data=[
                 ("Property ID", dp(25)),
                 ("Owners Name", dp(40)),
@@ -248,6 +359,10 @@ class PropertiesScreen(MDScreen):
                 ("00234", "Green Acres", "Uptown", "Empty"),
                 ("00564", "Blue Horizon", "Riverside", "On Renovation"),
                 ("00873", "Palm Heights", "Midtown", "Occupied"),
+                ("00890", "By Grace homes", "Rvist", "For Lease"),
+                ("00750", "Kiamunyi Phase II", "Kiamunyi", "For Sale"),
+                ("00750", "Blessed Hostels", "Kabarak", "For rent"),
+                ("00750", "Sweet Banana", "Freehold", "Occupied"),
             ],
             "Sale": [
                 ("00873", "Maple Estate", "Lakeside", "Available"),
