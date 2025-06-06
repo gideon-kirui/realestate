@@ -103,21 +103,23 @@ d_kv = '''
                         md_bg_color: "#00BFFF"
                         pos_hint: {"top": 1, "center_x": 0.85}
 
-                    AsyncImage:
-                        source: 'screens/rm.jpeg'
+                    MDBoxLayout:
+                        id: history_table
                         size_hint: None, None
-                        size: "430dp", "200dp"
-                        radius: [20]
-                        pos_hint: {"top": 0.9, "center_x": 0.5}
+                        size: "455dp", "280dp"
+                        orientation: 'vertical'
+                        padding: "10dp"
+                        pos_hint: {"top": 1, "center_x": 0.5}
+                        elevation: 0
 
                     MDGridLayout:
                         cols: 2
                         adaptive_size: True
                         spacing: "10dp"
-                        pos_hint: {"top": 0.53, "center_x": 0.5}
+                        pos_hint: {"top": 0.5, "center_x": 0.5}
                         MDCard:
                             size_hint: None, None
-                            size: "210dp", "300dp"
+                            size: "210dp", "280dp"
                             md_bg_color: 1, 1, 1, 1
                             MDRelativeLayout:
                                 MDBoxLayout:
@@ -191,7 +193,7 @@ d_kv = '''
 
                         MDCard:
                             size_hint: None, None
-                            size: "210dp", "300dp"
+                            size: "210dp", "280dp"
                             padding: "10dp"
                             md_bg_color: 1, 1, 1, 1
                             MDLabel:
@@ -245,6 +247,28 @@ class PropertiesScreen(MDScreen):
             items=self.menu_items,
             width_mult=3,
         )
+
+        tcont = self.ids.history_table
+        history_table = MDDataTable(
+            size_hint=(1, 0.6),
+            pos_hint={"center_x": 0.5, "center_y": 0.5},
+            use_pagination=True,
+            rows_num=2,
+            column_data=[
+                ("ID", dp(10)),
+                ("Name", dp(40)),
+                ("Age", dp(15)),
+            ],
+            row_data=[
+                ("1", "Alice", "25"),
+                ("2", "Bob", "30"),
+                ("3", "Charlie", "22"),
+                ("4", "Diana", "28"),
+                ("5", "Eve", "35"),
+            ]
+        )
+        tcont.add_widget(history_table)
+        tcont.row_height = dp(20)
 
     def on_tab_switch(self, instance_tabs, instance_tab, instance_tabs_label, tab_text):
         self.load_table(tab_text, instance_tab.ids.table_box)
@@ -342,6 +366,7 @@ class PropertiesScreen(MDScreen):
         table = MDDataTable(
             size_hint=(1, 1),
             use_pagination=True,
+            rows_num=7,
             column_data=[
                 ("Property ID", dp(25)),
                 ("Owners Name", dp(40)),
