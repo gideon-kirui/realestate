@@ -85,24 +85,7 @@ d_kv = '''
                 spacing: "10dp"
 
                 MDRelativeLayout:
-                    MDLabel:
-                        text: "More details for property 00123"
-                        adaptive_size: True
-                        color: "black"
-                        bold: True
-                        pos_hint: {"top": .98, "center_x": 0.3}
-
-                    MDRectangleFlatIconButton:
-                        icon: "pencil"
-                        text: "Edit Property"
-                        theme_text_color: "Custom"
-                        text_color: "black"
-                        line_color: "#00BFFF"
-                        theme_icon_color: "Custom"
-                        icon_color: "white"
-                        md_bg_color: "#00BFFF"
-                        pos_hint: {"top": 1, "center_x": 0.85}
-
+                    
                     MDBoxLayout:
                         id: history_table
                         size_hint: None, None
@@ -155,7 +138,7 @@ d_kv = '''
                                         font_size: "12sp"
 
                                 MDRaisedButton:
-                                    text: "Download Agreement Form"
+                                    text: "Agreement Form"
                                     on_release: app.open_file_chooser()
                                     adaptive_size: True
                                     font_size: "10sp"
@@ -163,7 +146,7 @@ d_kv = '''
                                     elevation: 0
                                 
                                 MDRaisedButton:
-                                    text: "Download Terms and Conditions"
+                                    text: "Terms and Conditions"
                                     on_release: app.open_file_chooser()
                                     adaptive_size: True
                                     font_size: "10sp"
@@ -255,16 +238,17 @@ class PropertiesScreen(MDScreen):
             use_pagination=True,
             rows_num=2,
             column_data=[
-                ("ID", dp(10)),
-                ("Name", dp(40)),
-                ("Age", dp(15)),
+                ("ID", dp(20)),
+                ("F Name", dp(20)),
+                ("Status", dp(20)),
+                ("Approval", dp(20)),
             ],
             row_data=[
-                ("1", "Alice", "25"),
-                ("2", "Bob", "30"),
-                ("3", "Charlie", "22"),
-                ("4", "Diana", "28"),
-                ("5", "Eve", "35"),
+                ("GU-10025E", "Alice", "Active", "In Debt"),
+                ("GU-10025E", "Bob", "Acitve-A", "Cleared"),
+                ("GU-10025E", "Charlie", "Active-A", "Cleard"),
+                ("GU-10025E", "Diana", "N-Active", "In Debt"),
+                ("GU-10025E", "Eve", "N-Active", "Cleared"),
             ]
         )
         tcont.add_widget(history_table)

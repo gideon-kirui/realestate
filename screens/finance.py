@@ -13,416 +13,619 @@ from kivymd.uix.label import MDLabel
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.fitimage import FitImage
 from kivy.uix.anchorlayout import AnchorLayout
+from kivy.properties import ListProperty, NumericProperty, StringProperty
 
 d_kv = '''
-<FinanceGraphArea>:
+
+<FinanceColProgressBar>
+    canvas.before:
+        Color:
+            rgba: root.bar_color + [0.3]
+        Line:
+            width: root.bar_width
+            ellipse: (self.x, self.y, self.width, self.height, 0, 360)
+    canvas.after:
+        Color:
+            rgb: root.bar_color
+        Line:
+            width: root.bar_width
+            ellipse: (self.x, self.y, self.width, self.height, 0, root.set_value*3.6)
+    MDRelativeLayout:
+        MDLabel:
+            text: root.parcentage
+            color: root.bar_color
+            adaptive_size: True
+            font_size: "30dp"
+            pos_hint: {"center_x":.5, "center_y":.6}
+            value: 50
+
+        MDLabel:
+            text: root.amount
+            color: root.bar_color
+            adaptive_size: True
+            font_size: "14dp"
+            bold: True
+            pos_hint: {"center_x":.5, "center_y":.4}
+            value: 50
+
 <FinanceScreen>:
     MDBoxLayout:
         orientation: 'vertical'
-        MDGridLayout:
-            cols: 2
-            spacing: "10dp"
-            padding: "10dp"
-            adaptive_height: True
-            adaptive_width: True
-            pos_hint: {"center_x": 0.5, "center_y": 0.5}
-            MDCard:
-                size_hint: None, None
-                size: "760dp", "580dp"
-                MDBoxLayout:
-                    orientation: 'vertical'
-                    spacing: "20dp"
-                    MDBoxLayout:
-                        orientation: 'horizontal'
-                        adaptive_size: True
-                        pos_hint: {"center_x": 0.45}
-                        spacing: "20dp"
+        MDRelativeLayout:
+            MDGridLayout:
+                cols: 3
+                adaptive_height: True
+                adaptive_width: True
+                spacing: "10dp"
+                pos_hint: {"center_x": 0.5, "center_y": .5}
+                MDCard:
+                    size_hint: None, None
+                    size: "230dp", "600dp"
+                    md_bg_color: 1, 1, 1, 1
+                    MDRelativeLayout:
+                        MDLabel:
+                            text: "Total Revenue Collected"
+                            color: 0, 0, 0, 1
+                            adaptive_size: True
+                            font_size: "16dp"
+                            pos_hint: {"center_x":.5, "center_y":.97}
+                            
+                        FinanceColProgressBar:
+                            size_hint: None, None
+                            size: 150, 150
+                            pos_hint: {"center_x":.5, "center_y":.8}
+                        
+                        MDLabel:
+                            text: "Total Expenditure"
+                            color: 0, 0, 0, 1
+                            adaptive_size: True
+                            font_size: "16dp"
+                            pos_hint: {"center_x":.5, "center_y":.63}
+                        
+                        FinanceColProgressBar:
+                            size_hint: None, None
+                            size: 150, 150
+                            pos_hint: {"center_x":.5, "center_y":.46}
+
+                        MDSeparator:
+                            height: "1dp"
+                            color: 0, 1, 0, 1
+                            pos_hint: {"center_x": 0.5, "center_y": .3}
+
+                        MDProgressBar:
+                            orientation: "vertical"
+                            value: 80
+                            size_hint: None, None 
+                            color: 0, 1, 0, 1
+                            width: "50dp"          
+                            height: "170dp"
+                            pos_hint: {"center_x":.15}
+                        
+                        MDLabel:
+                            text: "Rating Indicators"
+                            color: 0, 0, 0, 1
+                            adaptive_size: True
+                            font_size: "16dp"
+                            bold: True
+                            pos_hint: {"center_x":.6, "center_y":.25}
+                        
+                        MDCard:
+                            size_hint: None, None
+                            size: "130dp", "100dp"
+                            radius: [5, 5, 5, 5]
+                            pos_hint: {"top": .2, "right": .9}
+                            md_bg_color: 0, 0, 0, .1
+                            MDRelativeLayout:
+                                MDCard:
+                                    size_hint: None, None
+                                    size: "20dp", "20dp"
+                                    radius: [50, 50, 50, 50]
+                                    pos_hint: {"top": .9, "right": .2}
+                                    md_bg_color: [0,1,0, 1]
+
+                                MDLabel:
+                                    text: "Excellent(80 - 100%)"
+                                    adaptive_size: True
+                                    color: (0, 0, 0, 1)
+                                    bold: True
+                                    font_size: "10dp"
+                                    pos_hint: {"top": .87, "right": .95}
+
+                                MDCard:
+                                    size_hint: None, None
+                                    size: "20dp", "20dp"
+                                    radius: [50, 50, 50, 50]
+                                    pos_hint: {"top": .6, "right": .2}
+                                    md_bg_color: [0,0,1, 1]
+
+                                MDLabel:
+                                    text: "Average(50 - 79%)"
+                                    adaptive_size: True
+                                    color: (0, 0, 0, 1)
+                                    bold: True
+                                    font_size: "10dp"
+                                    pos_hint: {"top": .6, "right": .9}
+
+                                MDCard:
+                                    size_hint: None, None
+                                    size: "20dp", "20dp"
+                                    radius: [50, 50, 50, 50]
+                                    pos_hint: {"top": .3, "right": .2}
+                                    md_bg_color: [1,0,0, 1]
+
+                                MDLabel:
+                                    text: "Critical (0 - 49%)"
+                                    adaptive_size: True
+                                    color: (0, 0, 0, 1)
+                                    bold: True
+                                    font_size: "10dp"
+                                    pos_hint: {"top": .3, "right": .85}
+
+                MDCard:
+                    size_hint: None, None
+                    size: "500dp", "600dp"
+                    md_bg_color: .5, 0, 0, .1
+                    MDRelativeLayout:
+                        MDLabel:
+                            text: "Revenue Collection"
+                            color: 0, 0, 0, 1
+                            adaptive_size: True
+                            font_size: "24dp"
+                            bold: True
+                            pos_hint: {"center_x":.5, "center_y":.95}
+                        
+                        MDSeparator:
+                            height: "1dp"
+                            color: 0, 1, 0, 1
+                            pos_hint: {"center_x": 0.5, "center_y": .9}
+
                         MDTextField:
-                            id: finance_search_field
+                            pos_hint: {"center_x": 0.5, "center_y": .85}
                             hint_text: "Search"
                             mode: "round"
                             size_hint: None, None
-                            size: "380dp", "40dp"
+                            size: "350dp", "40dp"
                             line_color_focus: 0, 0, 0, 0  
                             text_color: 0, 0, 0, 1       
                             hint_text_color_normal: 0.4, 0.4, 0.4, 1  
                             md_bg_color: 0.95, 0.95, 0.95, 1  
                             icon_right: "magnify"
                             icon_right_color: 0.3, 0.3, 0.3, 1 
-                            on_text: root.on_search(self.text)
-
-                        MDRelativeLayout:
-                            MDIconButton:
-                                id: finance_filter_button
-                                icon: "filter-variant"
-                                adaptive_size: True
-                                icon_size: "24dp"
-                                pos_hint: {"center_y": 0.5}
-                                on_release: root.open_filter_menu()
-
-                    MDTabs:
-                        id: finance_tabs
-                        tab_bar_height: "30dp"
-                        on_tab_switch: root.on_tab_switch(*args)
-                        background_color: 1, 1, 1, 1
-                        text_color_normal: 0, 1, 0, 1
-                        text_color_active: 0, .9, 0, .9
-                        indicator_color: 1, 0, 0, 1
-                        elevation: 0
-                        FinanceTab:
-                            title: "Rent Properties"
-
-                        FinanceTab:
-                            title: "Lease properties"
-
-                        FinanceTab:
-                            title: "Sale Properties"
-
-            MDCard:
-                id: details_card
-                size_hint: None, None
-                size: "460dp", "585dp"
-                md_bg_color: 0.95, 0.95, 0.95, 1
-                orientation: 'vertical'
-                padding: "10dp"
-                spacing: "10dp"
-                MDRelativeLayout:
-                    FinanceGraphArea:
-                        size_hint: 1, None
-                        height: self.parent.height - dp(300) 
-                        pos_hint: {"top": 1}
-
-                    MDGridLayout:
-                        cols: 2
-                        adaptive_size: True
-                        spacing: "10dp"
-                        pos_hint: {"top": 0.5, "center_x": 0.5}
-                        MDCard:
-                            size_hint: None, None
-                            size: "210dp", "280dp"
-                            md_bg_color: 1, 1, 1, 1
-                            MDRelativeLayout:
-                                MDBoxLayout:
-                                    orientation: 'horizontal'
-                                    adaptive_size: True
-                                    pos_hint: {"top": .95, "center_x": 0.4}
-                                    spacing: "10dp"
-                                    MDLabel:
-                                        text: "Tenant:"
-                                        adaptive_size: True
-                                        color: "black"
-                                        bold: True
-                                    MDLabel:
-                                        text: "Gideon Kirui"
-                                        adaptive_size: True
-                                        color: "grey"
-                                        font_size: "12sp"
-
-                                MDSeparator:
-                                    height: "1dp"
-                                    color: 0, 1, 0, 1
-                                    pos_hint: {"center_x": 0.5, "center_y": .85}
-
-                                MDBoxLayout:
-                                    orientation: 'horizontal'
-                                    adaptive_size: True
-                                    pos_hint: {"top": .8, "center_x": 0.45}
-                                    spacing: "10dp"
-                                    MDLabel:
-                                        text: "Rental Amount:"
-                                        adaptive_size: True
-                                        color: "black"
-                                        bold: True
-                                    MDLabel:
-                                        text: "4,000"
-                                        adaptive_size: True
-                                        color: "grey"
-                                        font_size: "12sp"
-
-                                MDBoxLayout:
-                                    orientation: 'horizontal'
-                                    adaptive_size: True
-                                    pos_hint: {"top": .7, "center_x": 0.41}
-                                    spacing: "10dp"
-                                    MDLabel:
-                                        text: "Water Charges:"
-                                        adaptive_size: True
-                                        color: "black"
-                                        bold: True
-                                    MDLabel:
-                                        text: "12"
-                                        adaptive_size: True
-                                        color: "grey"
-                                        font_size: "12sp"
-                                MDBoxLayout:
-                                    orientation: 'horizontal'
-                                    adaptive_size: True
-                                    pos_hint: {"top": .6, "center_x": 0.45}
-                                    spacing: "10dp"
-                                    MDLabel:
-                                        text: "Power Chages:"
-                                        adaptive_size: True
-                                        color: "black"
-                                        bold: True
-                                    MDLabel:
-                                        text: "4,000"
-                                        adaptive_size: True
-                                        color: "grey"
-                                        font_size: "12sp"
-
-                                MDBoxLayout:
-                                    orientation: 'horizontal'
-                                    adaptive_size: True
-                                    pos_hint: {"top": .5, "center_x": 0.45}
-                                    spacing: "10dp"
-                                    MDLabel:
-                                        text: "Other Charges:"
-                                        adaptive_size: True
-                                        color: "black"
-                                        bold: True
-                                    MDLabel:
-                                        text: "4,000"
-                                        adaptive_size: True
-                                        color: "grey"
-                                        font_size: "12sp"
+                        
+                        MDBoxLayout:
+                            id: button_box
+                            adaptive_size: True
+                            spacing: "8dp"
+                            pos_hint: {"center_x": 0.5, "center_y": .8}
+                            MDFillRoundFlatButton:
+                                id: rentals_btn
+                                text: "Rentals"
+                                text_color: "white"
+                                md_bg_color: (1,0,100/255,1)
+                                pos_hint: {"center_x": .7, "center_y": .1}
+                                font_size: "12dp"
+                                elevation: 0
+                                on_release: root.switch_table("rentals")
                                 
-                                MDBoxLayout:
-                                    orientation: 'horizontal'
-                                    adaptive_size: True
-                                    pos_hint: {"top": .4, "center_x": 0.53}
-                                    spacing: "10dp"
-                                    MDLabel:
-                                        text: "Penalties:"
-                                        adaptive_size: True
-                                        color: "black"
-                                        bold: True
-                                    MDLabel:
-                                        text: "400,000"
-                                        adaptive_size: True
-                                        color: "grey"
-                                        font_size: "12sp"
 
-                                MDSeparator:
-                                    height: "1dp"
-                                    color: 0, 1, 0, 1
-                                    pos_hint: {"center_x": 0.5, "center_y": .26}
+                            MDFillRoundFlatButton:
+                                id: leased_btn
+                                text: "Leased properties"
+                                md_bg_color: (0,0,100/255,1)
+                                pos_hint: {"center_x": .7, "center_y": .1}
+                                font_size: "12dp"
+                                elevation: 0
+                                on_release: root.switch_table("leased")
+
+                            MDFillRoundFlatButton:
+                                id: sold_btn
+                                text: "Sold Properties"
+                                md_bg_color: (0,0,100/255,1)
+                                pos_hint: {"center_x": .7, "center_y": .1}
+                                font_size: "12dp"
+                                elevation: 0
+                                on_release: root.switch_table("sold")
+
+                            MDFillRoundFlatButton:
+                                id: others_btn
+                                text: "Other Revenues"
+                                md_bg_color: (0,0,100/255,1)
+                                pos_hint: {"center_x": .7, "center_y": .1}
+                                font_size: "12dp"
+                                elevation: 0
+                                on_release: root.switch_table("others")
                                 
-                                MDBoxLayout:
-                                    orientation: 'horizontal'
-                                    adaptive_size: True
-                                    pos_hint: {"top": .23, "center_x": 0.47}
-                                    spacing: "10dp"
-                                    MDLabel:
-                                        text: "Total Amount:"
-                                        adaptive_size: True
-                                        color: "black"
-                                        bold: True
-                                    MDLabel:
-                                        text: "4,000"
-                                        adaptive_size: True
-                                        color: "grey"
-                                        font_size: "12sp"
-                                        bold: True
-                                    
-                                MDSeparator:
-                                    height: "1dp"
-                                    color: 0, 1, 0, 1
-                                    pos_hint: {"center_x": 0.5, "center_y": .14}
-
-                                MDBoxLayout:
-                                    orientation: 'horizontal'
-                                    adaptive_size: True
-                                    pos_hint: {"top": .1, "center_x": 0.45}
-                                    spacing: "10dp"
-                                    MDLabel:
-                                        text: "Owner:"
-                                        adaptive_size: True
-                                        color: "black"
-                                        bold: True
-                                    MDLabel:
-                                        text: "Fred Mwahi"
-                                        adaptive_size: True
-                                        color: "grey"
-                                        font_size: "12sp"
-
-                        MDCard:
-                            size_hint: None, None
-                            size: "210dp", "280dp"
-                            padding: "10dp"
-                            md_bg_color: 1, 1, 1, 1
+                        MDBoxLayout:
+                            id: table_container
+                            orientation: 'vertical'
                             
 
-<FinanceTab>:
-    name: ''
-    MDBoxLayout:
-        id: finance_table_box
-        orientation: 'vertical'
-        padding: "10dp"
+                MDCard:
+                    size_hint: None, None
+                    size: "500dp", "600dp"
+                    md_bg_color: 0,0,100/255,1
+                    MDRelativeLayout:
+                        MDLabel:
+                            text: "Expenditure"
+                            color: 1, 1, 1, 1
+                            adaptive_size: True
+                            font_size: "24dp"
+                            bold: True
+                            pos_hint: {"center_x":.5, "center_y":.95}
+                        
+                        MDSeparator:
+                            height: "1dp"
+                            color: 1, 0, 0, 1
+                            pos_hint: {"center_x": 0.5, "center_y": .9}
 
+                        MDGridLayout:
+                            cols: 3
+                            adaptive_height: True
+                            adaptive_width: True
+                            spacing: "10dp"
+                            pos_hint: {"center_x": 0.5, "center_y": .6}
+                            MDCard:
+                                size_hint: None, None
+                                size: "155dp", "155dp"
+                                md_bg_color: 1, 1, 1, 1
+                                MDRelativeLayout:
+                                    MDIconButton:
+                                        icon: "plus"
+                                        adaptive_size: True
+                                        pos_hint: {"center_x": .8, "center_y": .8}
+                                        user_font_size: "48sp"
+                                        theme_text_color: "Custom"
+                                        md_bg_color: 0,1,100/255,1
+
+                                    MDLabel:
+                                        text: "Bills"
+                                        halign: "center"
+                                        adaptive_size: True
+                                        bold: True
+                                        pos_hint: {"center_x": 0.2, "center_y": .8}
+
+                                    MDLabel:
+                                        text: "KSH 100,000"
+                                        adaptive_size: True
+                                        font_size: "20dp"
+                                        bold: True
+                                        pos_hint: {"center_x": 0.5, "center_y": .5}
+
+                                    MDFillRoundFlatButton:
+                                        text: "Explore Expenditure"
+                                        md_bg_color: (1,0,100/255,1)
+                                        pos_hint: {"center_x": .5, "center_y": .2}
+                                        font_size: "12dp"
+                                        elevation: 0
+
+                            MDCard:
+                                size_hint: None, None
+                                size: "155dp", "155dp"
+                                md_bg_color: 1, 1, 1, 1
+                                MDRelativeLayout:
+                                    MDIconButton:
+                                        icon: "plus"
+                                        adaptive_size: True
+                                        pos_hint: {"center_x": .8, "center_y": .8}
+                                        user_font_size: "48sp"
+                                        theme_text_color: "Custom"
+                                        md_bg_color: 0,1,100/255,1
+
+                                    MDLabel:
+                                        text: "Sallaries"
+                                        halign: "center"
+                                        adaptive_size: True
+                                        font_size: "12dp"
+                                        bold: True
+                                        pos_hint: {"center_x": 0.2, "center_y": .8}
+
+                                    MDLabel:
+                                        text: "KSH 100,000"
+                                        adaptive_size: True
+                                        font_size: "20dp"
+                                        bold: True
+                                        pos_hint: {"center_x": 0.5, "center_y": .5}
+
+                                    MDFillRoundFlatButton:
+                                        text: "Explore Expenditure"
+                                        md_bg_color: (1,0,100/255,1)
+                                        pos_hint: {"center_x": .5, "center_y": .2}
+                                        font_size: "12dp"
+                                        elevation: 0
+
+                            MDCard:
+                                size_hint: None, None
+                                size: "155dp", "155dp"
+                                md_bg_color: 1, 1, 1, 1
+                                MDRelativeLayout:
+                                    MDIconButton:
+                                        icon: "plus"
+                                        adaptive_size: True
+                                        pos_hint: {"center_x": .8, "center_y": .8}
+                                        user_font_size: "48sp"
+                                        theme_text_color: "Custom"
+                                        md_bg_color: 0,1,100/255,1
+
+                                    MDLabel:
+                                        text: "Vochures"
+                                        halign: "center"
+                                        adaptive_size: True
+                                        font_size: "12dp"
+                                        bold: True
+                                        pos_hint: {"center_x": 0.2, "center_y": .8}
+
+                                    MDLabel:
+                                        text: "KSH 100,000"
+                                        adaptive_size: True
+                                        font_size: "20dp"
+                                        bold: True
+                                        pos_hint: {"center_x": 0.5, "center_y": .5}
+
+                                    MDFillRoundFlatButton:
+                                        text: "Explore Expenditure"
+                                        md_bg_color: (1,0,100/255,1)
+                                        pos_hint: {"center_x": .5, "center_y": .2}
+                                        font_size: "12dp"
+                                        elevation: 0
+
+                            MDCard:
+                                size_hint: None, None
+                                size: "155dp", "155dp"
+                                md_bg_color: 1, 1, 1, 1
+                                MDRelativeLayout:
+                                    MDIconButton:
+                                        icon: "plus"
+                                        adaptive_size: True
+                                        pos_hint: {"center_x": .8, "center_y": .8}
+                                        user_font_size: "48sp"
+                                        theme_text_color: "Custom"
+                                        md_bg_color: 0,1,100/255,1
+
+                                    MDLabel:
+                                        text: "Misleniuos"
+                                        halign: "center"
+                                        adaptive_size: True
+                                        font_size: "12dp"
+                                        bold: True
+                                        pos_hint: {"center_x": 0.25, "center_y": .8}
+
+                                    MDLabel:
+                                        text: "KSH 100,000"
+                                        adaptive_size: True
+                                        font_size: "20dp"
+                                        bold: True
+                                        pos_hint: {"center_x": 0.5, "center_y": .5}
+
+                                    MDFillRoundFlatButton:
+                                        text: "Explore Expenditure"
+                                        md_bg_color: (1,0,100/255,1)
+                                        pos_hint: {"center_x": .5, "center_y": .2}
+                                        font_size: "12dp"
+                                        elevation: 0
+
+                            MDCard:
+                                size_hint: None, None
+                                size: "155dp", "155dp"
+                                md_bg_color: 1, 1, 1, 1
+                                MDRelativeLayout:
+                                    MDIconButton:
+                                        icon: "plus"
+                                        adaptive_size: True
+                                        pos_hint: {"center_x": .8, "center_y": .8}
+                                        user_font_size: "48sp"
+                                        theme_text_color: "Custom"
+                                        md_bg_color: 0,1,100/255,1
+
+                                    MDLabel:
+                                        text: "PC Vochures"
+                                        halign: "center"
+                                        adaptive_size: True
+                                        font_size: "12dp"
+                                        bold: True
+                                        pos_hint: {"center_x": 0.27, "center_y": .8}
+
+                                    MDLabel:
+                                        text: "KSH 100,000"
+                                        adaptive_size: True
+                                        font_size: "20dp"
+                                        bold: True
+                                        pos_hint: {"center_x": 0.5, "center_y": .5}
+
+                                    MDFillRoundFlatButton:
+                                        text: "Explore Expenditure"
+                                        md_bg_color: (1,0,100/255,1)
+                                        pos_hint: {"center_x": .5, "center_y": .2}
+                                        font_size: "12dp"
+                                        elevation: 0
+
+                        MDSeparator:
+                            height: "1dp"
+                            color: 1, 0, 0, 1
+                            pos_hint: {"center_x": 0.5, "center_y": .3}
+                        
+                        MDCard:
+                            adaptive_size: True
+                            md_bg_color: 0,0,100/255,1
+                            padding: "10dp", "3dp"
+                            pos_hint: {"center_x": 0.5, "center_y": .3}
+                            MDLabel:
+                                text: "Upcomming Expenditures"
+                                color: "white"
+                                halign: "center"
+                                adaptive_size: True
+                                font_size: "14dp"
+                                bold: True
+
+                        BoxLayout:
+                            orientation: "vertical"
+                            size_hint: None, None
+                            size: "490dp", "180dp"
+                            pos_hint: {"center_x": 0.5, "center_y": .15}
+                            padding: "10dp"
+                            MDScrollView:
+                                MDList:
+                                    spacing: "10dp"
+                                    TwoLineListItem:
+                                        text: "July Field Activations"
+                                        secondary_text: "Deu: 05/06/2024"
+                                        theme_text_color: "Custom"
+                                        text_color: (1, 1, 1, 1)
+                                        secondary_theme_text_color: "Custom"
+                                        secondary_text_color: (1,1,1,1)
+                                        bg_color: (1,0,100/255,1)
+                                        radius: [20,20,20,20]
+                                        bold: True
+                                        
+                                        ContainerRight:
+                                            MDCard:
+                                                adaptive_size: True
+                                                md_bg_color: 1, 1, 1, 1
+                                                radius: [10,10, 10,10]
+                                                MDLabel:
+                                                    text: "KSH 30000"
+                                                    halign: "center"
+                                                    adaptive_size: True
+                                                    padding: "10dp", "5dp"
+                                                    font_size: "12dp"
+                                                    bold: True
+
+                                    TwoLineListItem:
+                                        text: "July Field Activations"
+                                        secondary_text: "Deu: 05/06/2024"
+                                        theme_text_color: "Custom"
+                                        text_color: (1, 1, 1, 1)
+                                        secondary_theme_text_color: "Custom"
+                                        secondary_text_color: (1,1,1,1)
+                                        bg_color: (1,0,100/255,1)
+                                        radius: [20,20,20,20]
+                                        bold: True
+                                        
+                                        ContainerRight:
+                                            MDCard:
+                                                adaptive_size: True
+                                                md_bg_color: 1, 1, 1, 1
+                                                radius: [10,10, 10,10]
+                                                MDLabel:
+                                                    text: "KSH 30000"
+                                                    halign: "center"
+                                                    adaptive_size: True
+                                                    padding: "10dp", "5dp"
+                                                    font_size: "12dp"
+                                                    bold: True
+                                    
+                                    TwoLineListItem:
+                                        text: "July Field Activations"
+                                        secondary_text: "Deu: 05/06/2024"
+                                        theme_text_color: "Custom"
+                                        text_color: (1, 1, 1, 1)
+                                        secondary_theme_text_color: "Custom"
+                                        secondary_text_color: (1,1,1,1)
+                                        bg_color: (1,0,100/255,1)
+                                        radius: [20,20,20,20]
+                                        bold: True
+                                        
+                                        ContainerRight:
+                                            MDCard:
+                                                adaptive_size: True
+                                                md_bg_color: 1, 1, 1, 1
+                                                radius: [10,10, 10,10]
+                                                MDLabel:
+                                                    text: "KSH 30000"
+                                                    halign: "center"
+                                                    adaptive_size: True
+                                                    padding: "10dp", "5dp"
+                                                    font_size: "12dp"
+                                                    bold: True
 '''
 Builder.load_string(d_kv)
 
-class FinanceTab(MDBoxLayout, MDTabsBase):
-    pass
-
 class FinanceScreen(MDScreen):
-    finace_table_cache = {}
-    def on_kv_post(self, base_widget):
-        finance_first_tab = self.ids.finance_tabs.get_slides()[0]
-        self.load_finance_table("Rent Properties", finance_first_tab.ids.finance_table_box) 
+    active_category = StringProperty("rentals")
+    def on_kv_post(self, base_widget):  # Automatically called after KV is loaded
+        self.switch_table("rentals")  # Show rentals by default
 
-        self.menu_items = [
-            {"text": "Active", "on_release": lambda x="Active": self.filter_table(x)},
-            {"text": "Suspended", "on_release": lambda x="Suspended": self.filter_table(x)},
-            {"text": "Inactive", "on_release": lambda x="Inactive": self.filter_table(x)},
-        ]
-        self.filter_menu = MDDropdownMenu(
-            caller=self.ids.finance_filter_button,
-            items=self.menu_items,
-            width_mult=3,
-        )
+    def switch_table(self, category):
+        self.active_category = category
+        self.update_button_colors()
+        self.ids.table_container.clear_widgets()
+        self.add_table_section(category)
 
-    def on_tab_switch(self, instance_tabs, instance_tab, instance_tabs_label, tab_text):
-        self.load_finance_table(tab_text, instance_tab.ids.finance_table_box)
+    def update_button_colors(self):
+        colors = {
+            "rentals": (0,0,100/255,1),       
+            "leased": (0,0,100/255,1),        
+            "sold": (0,0,100/255,1),          
+            "others": (0,0,100/255,1), 
+        }
 
-    def load_finance_table(self, category, container):
-        finance_table = MDDataTable()
-        container.clear_widgets()
-        if category in self.finace_table_cache:
-            container.add_widget(self.finace_table_cache[category])
-            return
+        selected_color = (1,0,100/255,1)  # Highlighted green
 
-        if category == "Rent Properties":
-            row_data = [
-                ("00123", "Sunset Villas", "Downtown", "Active"),
-                ("00234", "Green Acres", "Uptown", "Active"),
-                ("00564", "Blue Horizon", "Riverside", "Active"),
-                ("00873", "Palm Heights", "Midtown", "Active"),
-                ("00890", "By Grace homes", "Rvist", "Inactive"),
-                ("00750", "Kiamunyi Phase II", "Kiamunyi", "Suspended"),
-                ("00750", "Blessed Hostels", "Kabarak", "Suspended"),
-                ("00750", "Sweet Banana", "Freehold", "Inactive"),
-            ]
-        elif category == "Lease properties":
-            row_data = [
-                ("00873", "Maple Estate", "Lakeside", "Available"),
-                ("000865", "Stone Ridge", "Hills", "Sold"),
-            ]
-        elif category == "Sale Properties":
-            row_data = [
-                ("89965", "Ocean Breeze", "Coastal", "Leased"),
-                ("76854", "Forest View", "Suburbs", "Available"),
-            ]
+        self.ids.rentals_btn.md_bg_color = selected_color if self.active_category == "rentals" else colors["rentals"]
+        self.ids.leased_btn.md_bg_color = selected_color if self.active_category == "leased" else colors["leased"]
+        self.ids.sold_btn.md_bg_color = selected_color if self.active_category == "sold" else colors["sold"]
+        self.ids.others_btn.md_bg_color = selected_color if self.active_category == "others" else colors["others"]
+
+    def add_table_section(self, category):
+        table_box = self.ids.table_container
+
+        if category == "rentals":
+            # title = "Rental Properties"
+            row_data = [("Unit A", "10,000"), ("Unit B", "12,000"), ("Unit B", "12,000"), ("Unit B", "12,000"),("Unit B", "12,000"), ("Unit B", "12,000"),("Unit A", "10,000"), ("Unit B", "12,000"),("Unit A", "10,000"), ("Unit B", "12,000")]
+        elif category == "leased":
+            # title = "Leased Properties"
+            row_data = [("Office 1", "50,000")]
+        elif category == "sold":
+            # title = "Sold Properties"
+            row_data = [("House X", "2,000,000")]
+        elif category == "others":
+            # title = "Other Revenues"
+            row_data = [("Parking", "3,000"), ("Penalty", "1,000")]
         else:
+            # title = "Unknown"
             row_data = []
-        
-        finance_table = MDDataTable(
-            size_hint=(1, 1),
-            use_pagination=True,
-            rows_num=7,
-            column_data=[
-                ("Property ID", dp(25)),
-                ("Property Name", dp(40)),
-                ("Property Location", dp(50)),
-                ("Payment Status", dp(30)),
-            ],
-            row_data=row_data,
-        )
 
-        self.finace_table_cache[category] = finance_table
-        container.add_widget(finance_table)
+        section = MDBoxLayout(orientation="vertical", spacing="10dp", size_hint_y=None)
+        section.bind(minimum_height=section.setter("height"))
 
-    def open_filter_menu(self):
-        self.filter_menu.caller = self.ids.finance_filter_button
-        self.filter_menu.open()
-
-    def filter_table(self, status):
-        self.filter_menu.dismiss()
-        current_tab = self.ids.finance_tabs.get_current_tab()
-        category = current_tab.title
-        container = current_tab.ids.finance_table_box
-
-        if category not in self.finace_table_cache:
-            return
-
-        # Filter data from cache
-        original_table = self.finace_table_cache[category]
-        filtered_data = [row for row in original_table.row_data if status.lower() in row[3].lower()]
-        
-        # Create and show filtered table
-        container.clear_widgets()
-        finace_table = MDDataTable(
-            size_hint=(1, 1),
-            use_pagination=True,
-            column_data=original_table.column_data,
-            row_data=filtered_data,
-        )
-        container.add_widget(finace_table)
-
-    def on_search(self, query):
-        query = query.lower()
-        current_tab = self.ids.finance_tabs.get_current_tab().title
-        original_rows = self.get_original_rows(current_tab)
-
-        if not query:
-            filtered_rows = original_rows
-        else:
-            filtered_rows = [
-                row for row in original_rows
-                if any(query in str(cell).lower() for cell in row)
-            ]
-
-        container = self.ids.finance_tabs.get_current_tab().ids.finance_table_box
-        container.clear_widgets()
+        section.add_widget(MDLabel(bold=True, font_style="H6", halign="left"))
 
         table = MDDataTable(
-            size_hint=(1, 1),
+            size_hint=(None, None),
+            height=dp(430),
+            width=dp(480),
             use_pagination=True,
             rows_num=7,
-            column_data=[
-                ("Property ID", dp(25)),
-                ("Owners Name", dp(40)),
-                ("Location", dp(50)),
-                ("Status", dp(30)),
-            ],
-            row_data=filtered_rows,
+            pos_hint={"center_x": 0.5, "center_y": 0.55},
+            column_data=[("Property", dp(40)), ("Amount", dp(40))],
+            row_data=row_data
         )
-        container.add_widget(table)
+        section.add_widget(table)
+        table_box.add_widget(section)
 
-    def get_original_rows(self, category):
-        data = {
-            "Rent Properties": [
-                ("00123", "Sunset Villas", "Downtown", "Active"),
-                ("00234", "Green Acres", "Uptown", "Active"),
-                ("00564", "Blue Horizon", "Riverside", "Active"),
-                ("00873", "Palm Heights", "Midtown", "Active"),
-                ("00890", "By Grace homes", "Rvist", "Inactive"),
-                ("00750", "Kiamunyi Phase II", "Kiamunyi", "Suspended"),
-                ("00750", "Blessed Hostels", "Kabarak", "Suspended"),
-                ("00750", "Sweet Banana", "Freehold", "Inactive"),
-            ],
-            "Lease properties": [
-                ("00873", "Maple Estate", "Lakeside", "Available"),
-                ("000865", "Stone Ridge", "Hills", "Sold"),
-            ],
-            "Sale Properties": [
-                ("89965", "Ocean Breeze", "Coastal", "Leased"),
-                ("76854", "Forest View", "Suburbs", "Available"),
-            ]
-        }
-        return data.get(category, [])
+class FinanceColProgressBar(AnchorLayout):
+    set_value = NumericProperty(0)
+    bar_color = ListProperty([1,0,100/255])
+    bar_width = NumericProperty(10)
+    value = NumericProperty(80)
+    duration = NumericProperty(1.5)
+    parcentage = StringProperty("0%")
+    amount = StringProperty("KSH 0")
+    counter = 0
+    acounter = 100000000
+    amnt_color = ListProperty([0,1,100/255])
 
-class FinanceGraphArea(AnchorLayout):
-    def on_kv_post(self, base_widget):
-        # Example: Line graph
-        weeks = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-        percentage = [0,1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-
-        fig, ax = plt.subplots()
-        ax.plot(weeks, percentage, marker='o')
-        # ax.set_title("Sample Line Graph")
-        # ax.set_xlabel("X Axis")
-        # ax.set_ylabel("Y Axis")
-
-        graph = FigureCanvasKivyAgg(fig)
-        self.add_widget(graph)
+    def __init__(self, **kwargs):
+        super(FinanceColProgressBar, self).__init__(**kwargs)
+        Clock.schedule_once(self.animate, 0)
+    
+    def animate(self, dt):  # Accept dt here
+        Clock.schedule_interval(self.percent_counter, self.duration/self.value)
+    
+    def percent_counter(self, dt):  # Accept dt here too
+        if self.counter < self.value and self.acounter >= 0:
+            self.counter += 1
+            self.parcentage = f"{self.counter}%"
+            self.set_value = self.counter
+            self.amount = f"KSH {self.acounter}"
+        else:
+            Clock.unschedule(self.percent_counter)

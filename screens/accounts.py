@@ -3,7 +3,7 @@ from kivy.lang import Builder
 from kivymd.uix.card import MDCard
 
 d_kv = '''
-<YourContainer>
+
 <AccountsScreen>:
     MDBoxLayout:
         orientation: 'vertical'
@@ -71,7 +71,7 @@ d_kv = '''
                                         secondary_text: "01RSGGFS1"
 
                                         ImageLeftWidget:
-                                            source: "screens/nophoto.png"
+                                            source: "asset/images/profiles/nophoto.png"
                                         
                                         ContainerRight:
                                             MDCard:
@@ -90,7 +90,7 @@ d_kv = '''
                                         secondary_text: "01RSGGFS1"
 
                                         ImageLeftWidget:
-                                            source: "screens/nophoto.png"
+                                            source: "asset/images/profiles/nophoto.png"
 
                                         ContainerRight:
                                             MDCard:
@@ -109,7 +109,7 @@ d_kv = '''
                                         secondary_text: "01RSGGFS1"
 
                                         ImageLeftWidget:
-                                            source: "screens/nophoto.png"
+                                            source: "asset/images/profiles/nophoto.png"
 
                                         ContainerRight:
                                             MDCard:
@@ -128,7 +128,7 @@ d_kv = '''
                                         secondary_text: "01RSGGFS1"
 
                                         ImageLeftWidget:
-                                            source: "screens/nophoto.png"
+                                            source: "asset/images/profiles/nophoto.png"
 
                                         ContainerRight:
                                             MDCard:
@@ -147,7 +147,7 @@ d_kv = '''
                                         secondary_text: "01RSGGFS1"
 
                                         ImageLeftWidget:
-                                            source: "screens/nophoto.png"
+                                            source: "asset/images/profiles/nophoto.png"
                                         
                                         ContainerRight:
                                             MDCard:
@@ -166,7 +166,7 @@ d_kv = '''
                                         secondary_text: "01RSGGFS1"
 
                                         ImageLeftWidget:
-                                            source: "screens/nophoto.png"
+                                            source: "asset/images/profiles/nophoto.png"
 
                                         ContainerRight:
                                             MDCard:
@@ -185,7 +185,7 @@ d_kv = '''
                                         secondary_text: "01RSGGFS1"
 
                                         ImageLeftWidget:
-                                            source: "screens/nophoto.png"
+                                            source: "asset/images/profiles/nophoto.png"
 
                                         ContainerRight:
                                             MDCard:
@@ -204,7 +204,7 @@ d_kv = '''
                                         secondary_text: "01RSGGFS1"
 
                                         ImageLeftWidget:
-                                            source: "screens/nophoto.png"
+                                            source: "asset/images/profiles/nophoto.png"
                                         
                                         ContainerRight:
                                             MDCard:

@@ -147,7 +147,7 @@ d_kv = '''
                                 text_color: 0, 0, 1, 1 
                             
                             MDIcon:
-                                icon: "moneyup.png"
+                                icon: "asset/images/icons/moneyup.png"
                                 font_size: "70dp"
                                 adaptive_size: True
                                 pos_hint: {"top": .7, "right": .86}
@@ -229,7 +229,7 @@ d_kv = '''
                                 text_color: 0, 0, 1, 1 
                             
                             MDIcon:
-                                icon: "prpt.png"
+                                icon: "asset/images/icons/prpt.png"
                                 font_size: "80dp"
                                 adaptive_size: True
                                 pos_hint: {"top": .8, "right": .83}

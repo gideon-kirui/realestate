@@ -701,7 +701,7 @@ MDScreen:
 
             # Logo Button
             MDIconButton:
-                icon: "logo.png"
+                icon: "asset/images/icons/logo.png"
                 adaptive_size: True
                 icon_size: "40dp"
                 on_release: app.change_screen('dashboard')
@@ -848,13 +848,20 @@ MDScreen:
                     name: 'settings'
 
         MDBoxLayout:
-            orientation: "vertical"
+            orientation: "horizontal"
             size_hint: 1, .05
             padding: "12dp"
             md_bg_color: "red"
-            
-            MDLabel:
-                text: "Footer"
+            MDRelativeLayout:
+                MDIcon
+                    icon: "asset/images/icons/logo.png"
+                    pos_hint: {"center_x": 0.47, "center_y": 0.5}
+                MDLabel:
+                    text: "Thegiks Softwares"
+                    adptive_size: True
+                    pos_hint: {"center_x": .98}
+                    bold: True
+                    color: 1,1,1,1
 
 '''
 class MultiStepForm(MDBoxLayout):
