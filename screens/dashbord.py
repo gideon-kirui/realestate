@@ -10,6 +10,36 @@ from kivy.clock import Clock
 
 d_kv = '''
 
+<TntsCircularProgressBar>
+    canvas.before:
+        Color:
+            rgba: root.bar_colortn + [0.3]
+        Line:
+            width: root.bar_widthtn
+            ellipse: (self.x, self.y, self.width, self.height, 0, 360)
+    canvas.after:
+        Color:
+            rgb: root.bar_colortn
+        Line:
+            width: root.bar_widthtn
+            ellipse: (self.x, self.y, self.width, self.height, 0, root.set_valuetn*3.6)
+
+    MDRelativeLayout:
+        MDLabel:
+            text: root.texttn
+            color: root.bar_colortn
+            adaptive_size: True
+            font_size: "16dp"
+            pos_hint: {"center_x":.5, "center_y":.6}
+            valuetn: 99
+
+        MDLabel:
+            text: "100 / 120"
+            color: root.bar_colortn
+            adaptive_size: True
+            font_size: "10dp"
+            pos_hint: {"center_x":.5, "center_y":.35}
+
 <CircularProgressBar>
     canvas.before:
         Color:
@@ -98,7 +128,8 @@ d_kv = '''
         font_size: "20dp"
         pos_hint: {"center_x":.2, "center_y":.5}
         valuelp: 99
-
+    
+    
 <GraphArea>:
     
         
@@ -304,59 +335,10 @@ d_kv = '''
                                         bold: True
                                         pos_hint: {"top": .95, "x": .08}
 
-                                    MDCard:
-                                        adaptive_size: True
-                                        radius: [5, 5, 5, 5]
-                                        pos_hint: {"top": .75, "right": .6}
-                                        md_bg_color: (0, 1, 0, 1)
-
-                                        MDBoxLayout:
-                                            orientation: "horizontal"
-                                            adaptive_size: True  
-                                            padding: "5dp"
-                                            spacing: "5dp"
-                                            MDLabel:
-                                                text: "2000 Active"
-                                                adaptive_size: True
-                                                color: (1, 1, 1, 1)
-                                                bold: True
-                                                font_size: "12dp"
-
-                                    MDCard:
-                                        adaptive_size: True
-                                        radius: [5, 5, 5, 5]
-                                        pos_hint: {"top": .5, "right": .68}
-                                        md_bg_color: (1, 1, 0, 1)
-
-                                        MDBoxLayout:
-                                            orientation: "horizontal"
-                                            adaptive_size: True  
-                                            padding: "5dp"
-                                            spacing: "5dp"
-                                            MDLabel:
-                                                text: "500 Requests"
-                                                adaptive_size: True
-                                                color: (0, 0, 0, 1)
-                                                bold: True
-                                                font_size: "12dp"
-
-                                    MDCard:
-                                        adaptive_size: True
-                                        radius: [5, 5, 5, 5]
-                                        pos_hint: {"top": .25, "right": .75}
-                                        md_bg_color: (1, 0, 0, 1)
-
-                                        MDBoxLayout:
-                                            orientation: "horizontal"
-                                            adaptive_size: True  
-                                            padding: "5dp"
-                                            spacing: "5dp"
-                                            MDLabel:
-                                                text: "100 Inactivated"
-                                                adaptive_size: True
-                                                color: (1, 1, 1, 1)
-                                                bold: True
-                                                font_size: "12dp"            
+                                    TntsCircularProgressBar:
+                                        size_hint: None, None
+                                        size: 70, 70
+                                        pos_hint: {"center_x":.5, "center_y":.4}       
 
                             MDCard:
                                 size_hint: None, None
@@ -370,60 +352,54 @@ d_kv = '''
                                         bold: True
                                         pos_hint: {"top": .95, "x": .4}
 
-                                    MDCard:
-                                        adaptive_size: True
-                                        radius: [5, 5, 5, 5]
-                                        pos_hint: {"top": .75, "right": .95}
-                                        md_bg_color: (0, 1, 0, 1)
+                                    BoxLayout:
+                                        id: landlords_donut_box
+                                        size_hint: None, None
+                                        size: "80dp", "100dp"
+                                        pos_hint: {"center_x": 0.3, "center_y": 0.5}
+                                    
+                                    MDGridLayout:
+                                        cols: 2
+                                        adaptive_height: True
+                                        adaptive_width: True
+                                        spacing: "5dp"
+                                        pos_hint: {"center_x": 0.77, "center_y": .23}
 
-                                        MDBoxLayout:
-                                            orientation: "horizontal"
-                                            adaptive_size: True  
-                                            padding: "5dp"
-                                            spacing: "5dp"
-                                            MDLabel:
-                                                text: "2000 Active"
-                                                adaptive_size: True
-                                                color: (1, 1, 1, 1)
-                                                bold: True
-                                                font_size: "12dp"
+                                        MDCard:
+                                            size_hint: None, None
+                                            size: "10dp", "10dp"
+                                            radius: [50]
+                                            md_bg_color: "#4CAF50"
+                                        MDLabel:
+                                            text: "Active"
+                                            adaptive_size: True
+                                            font_size: "10dp"
+                                            color: "black"
+                                            bold: True
 
-                                    MDCard:
-                                        adaptive_size: True
-                                        radius: [5, 5, 5, 5]
-                                        pos_hint: {"top": .5, "right": .95}
-                                        md_bg_color: (1, 1, 0, 1)
+                                        MDCard:
+                                            size_hint: None, None
+                                            size: "10dp", "10dp"
+                                            radius: [50]
+                                            md_bg_color: "#FFC107"
+                                        MDLabel:
+                                            text: "Suspended"
+                                            adaptive_size: True
+                                            font_size: "8dp"
+                                            color: "black"
+                                            bold: True
 
-                                        MDBoxLayout:
-                                            orientation: "horizontal"
-                                            adaptive_size: True  
-                                            padding: "5dp"
-                                            spacing: "5dp"
-                                            MDLabel:
-                                                text: "500 Requests"
-                                                adaptive_size: True
-                                                color: (0, 0, 0, 1)
-                                                bold: True
-                                                font_size: "12dp"
-
-                                    MDCard:
-                                        adaptive_size: True
-                                        radius: [5, 5, 5, 5]
-                                        pos_hint: {"top": .25, "right": .95}
-                                        md_bg_color: (1, 0, 0, 1)
-
-                                        MDBoxLayout:
-                                            orientation: "horizontal"
-                                            adaptive_size: True  
-                                            padding: "5dp"
-                                            spacing: "5dp"
-                                            MDLabel:
-                                                text: "100 Inactivated"
-                                                adaptive_size: True
-                                                color: (1, 1, 1, 1)
-                                                bold: True
-                                                font_size: "12dp"
-                            
+                                        MDCard:
+                                            size_hint: None, None
+                                            size: "10dp", "10dp"
+                                            radius: [50]
+                                            md_bg_color: "#FF1100"
+                                        MDLabel:
+                                            text: "Inactive"
+                                            adaptive_size: True
+                                            font_size: "8dp"
+                                            color: "black"
+                                            bold: True
 
                     MDCard:
                         size_hint: None, None
@@ -443,108 +419,14 @@ d_kv = '''
                                 adaptive_size: True
                                 pos_hint: {"top": .95, "right": .95}
                                 theme_text_color: "Custom"
-                                text_color: 0, 0, 1, 1 
+                                text_color: 0, 0, 1, 1
 
-                            MDCard:
+                            BoxLayout:
+                                id: vochures_chart_box
                                 size_hint: None, None
-                                size: "60dp", "60dp"
-                                radius: [50, 50, 50, 50]
-                                pos_hint: {"top": .7, "right": .25}
-                                md_bg_color: 0.95, 0.95, 0.95, 1
-                                elavetion: 5
+                                size: "200dp", "120dp"
+                                pos_hint: {"center_x": 0.5, "center_y": 0.4}
 
-                                MDRelativeLayout:
-                                    MDLabel:
-                                        text: "1000"
-                                        adaptive_size: True
-                                        color: (0, 0, 1, 1)
-                                        bold: True
-                                        font_size: "14dp"
-                                        pos_hint: {"top": .6, "x": .2}
-
-                            MDCard:
-                                adaptive_size: True
-                                radius: [5, 5, 5, 5]
-                                pos_hint: {"top": .2, "right": .24}
-                                md_bg_color: (0, 0, 1, 1)
-
-                                MDBoxLayout:
-                                    orientation: "horizontal"
-                                    adaptive_size: True  
-                                    padding: "3dp"
-                                    MDLabel:
-                                        text: "Approved"
-                                        adaptive_size: True
-                                        color: (1, 1, 1, 1)
-                                        bold: True
-                                        font_size: "10dp"
-
-                            MDCard:
-                                size_hint: None, None
-                                size: "60dp", "60dp"
-                                radius: [50, 50, 50, 50]
-                                pos_hint: {"top": .7, "right": .6}
-                                md_bg_color: 0.95, 0.95, 0.95, 1
-                                elavetion: 5
-
-                                MDRelativeLayout:
-                                    MDLabel:
-                                        text: "1000"
-                                        adaptive_size: True
-                                        color: (.5, .5, 0, 1)
-                                        bold: True
-                                        font_size: "14dp"
-                                        pos_hint: {"top": .6, "x": .2}
-
-                            MDCard:
-                                adaptive_size: True
-                                radius: [5, 5, 5, 5]
-                                pos_hint: {"top": .2, "right": .57}
-                                md_bg_color: (1, 1, 0, 1)
-                                MDBoxLayout:
-                                    orientation: "horizontal"
-                                    adaptive_size: True  
-                                    padding: "3dp"
-                                    MDLabel:
-                                        text: "Pending"
-                                        adaptive_size: True
-                                        color: (0, 0, 0, 1)
-                                        bold: True
-                                        font_size: "10dp"
-
-                            MDCard:
-                                size_hint: None, None
-                                size: "60dp", "60dp"
-                                radius: [50, 50, 50, 50]
-                                pos_hint: {"top": .7, "right": .95}
-                                md_bg_color: 0.95, 0.95, 0.95, 1
-                                elavetion: 5
-
-                                MDRelativeLayout:
-                                    MDLabel:
-                                        text: "1000"
-                                        adaptive_size: True
-                                        color: (1, 0, 0, 1)
-                                        bold: True
-                                        font_size: "14dp"
-                                        pos_hint: {"top": .6, "x": .2}
-
-                            MDCard:
-                                adaptive_size: True
-                                radius: [5, 5, 5, 5]
-                                pos_hint: {"top": .2, "right": .92}
-                                md_bg_color: (1, 0, 0, 1)
-
-                                MDBoxLayout:
-                                    orientation: "horizontal"
-                                    adaptive_size: True  
-                                    padding: "3dp"
-                                    MDLabel:
-                                        text: "Rejected"
-                                        adaptive_size: True
-                                        color: (1, 1, 1, 1)
-                                        bold: True
-                                        font_size: "10dp"
 
             MDCard:
                 size_hint: None, None
@@ -851,7 +733,50 @@ d_kv = '''
 Builder.load_string(d_kv)
 
 class DashboardScreen(MDScreen):
-    pass
+    def on_kv_post(self, base_widget):
+        self.add_vochures_pie_chart()
+        self.add_landlords_donut_chart()
+
+    def add_vochures_pie_chart(self):
+        # Pie data
+        labels = ['Used', 'Unused', 'Expired']
+        sizes = [50, 30, 20]
+        colors = ['#4CAF50', '#2196F3', '#FF5722']
+
+        # Create the figure
+        fig, ax = plt.subplots(figsize=(1.2, 1.2), dpi=100)
+        fig.patch.set_facecolor('none')
+        ax.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90, colors=colors)
+        ax.axis('equal')
+
+        # Inject into the layout
+        self.ids.vochures_chart_box.add_widget(FigureCanvasKivyAgg(fig))
+    
+    def add_landlords_donut_chart(self):
+        sizes = [60, 25, 15]
+        colors = ['#4CAF50', '#FFC107', "#FF1100"]
+
+        fig, ax = plt.subplots(figsize=(2, 2), dpi=100)
+        fig.patch.set_facecolor('none')
+        wedges, texts, autotexts = ax.pie(
+            sizes,
+            colors=colors,
+            wedgeprops=dict(width=0.4),
+            autopct='%1.1f%%',
+            startangle=90,
+            pctdistance=0.9 
+        )
+
+        for autotext in autotexts:
+            autotext.set_color("black")
+            autotext.set_fontsize(6)
+            autotext.set_fontweight("bold")
+
+        ax.set(aspect="equal")
+
+        donut = FigureCanvasKivyAgg(fig)
+        self.ids.landlords_donut_box.add_widget(donut)
+
 
 class CircularProgressBar(AnchorLayout):
     set_value = NumericProperty(0)
@@ -946,6 +871,30 @@ class CircularProgressBarLp(AnchorLayout):
             self.counterlp += 1
             self.textlp = f"{self.counterlp}%"
             self.set_valuelp = self.counterlp
+        else:
+            Clock.unschedule(self.percent_counter)
+
+class TntsCircularProgressBar(AnchorLayout):
+    set_valuetn = NumericProperty(0)
+    bar_colortn = ListProperty([0.0, 0.0, 0.545])
+    bar_widthtn = NumericProperty(3)
+    valuetn = NumericProperty(86)
+    durationtn = NumericProperty(1.5)
+    texttn = StringProperty("0%")
+    countertn = 0
+
+    def __init__(self, **kwargs):
+        super(TntsCircularProgressBar, self).__init__(**kwargs)
+        Clock.schedule_once(self.animate, 0)
+    
+    def animate(self, dt):  # Accept dt here
+        Clock.schedule_interval(self.percent_counter, self.durationtn/self.valuetn)
+    
+    def percent_counter(self, dt):  # Accept dt here too
+        if self.countertn < self.valuetn:
+            self.countertn += 1
+            self.texttn = f"{self.countertn}%"
+            self.set_valuetn = self.countertn
         else:
             Clock.unschedule(self.percent_counter)
 

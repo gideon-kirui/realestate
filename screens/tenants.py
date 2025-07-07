@@ -4,7 +4,7 @@ from kivymd.uix.card import MDCard
 
 d_kv = '''
 
-<AccountsScreen>:
+<TenantsScreen>:
     MDBoxLayout:
         orientation: 'vertical'
         MDRelativeLayout:
@@ -515,10 +515,11 @@ d_kv = '''
                                         elevation: 0
 
                                     MDRaisedButton:
-                                        text: "Update User profile"
+                                        text: "Update Tenant's profile"
                                         font_size: "16sp"
-                                        pos_hint: {"center_x": .24, "center_y": .07}
+                                        pos_hint: {"center_x": .28, "center_y": .07}
                                         elevation: 0
+                                        on_release: app.change_screen('tenantprofile')
 
                                     MDIconButton:
                                         icon: "plus"
@@ -540,5 +541,5 @@ Builder.load_string(d_kv)
 class ContainerRight(MDCard):
     pass
 
-class AccountsScreen(MDScreen):
+class TenantsScreen(MDScreen):
     pass    

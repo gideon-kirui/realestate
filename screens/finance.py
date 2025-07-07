@@ -30,6 +30,7 @@ d_kv = '''
         Line:
             width: root.bar_width
             ellipse: (self.x, self.y, self.width, self.height, 0, root.set_value*3.6)
+            
     MDRelativeLayout:
         MDLabel:
             text: root.parcentage
@@ -164,7 +165,7 @@ d_kv = '''
                 MDCard:
                     size_hint: None, None
                     size: "500dp", "600dp"
-                    md_bg_color: .5, 0, 0, .1
+                    md_bg_color: 1, 1, 1, .1
                     MDRelativeLayout:
                         MDLabel:
                             text: "Revenue Collection"
@@ -172,7 +173,16 @@ d_kv = '''
                             adaptive_size: True
                             font_size: "24dp"
                             bold: True
-                            pos_hint: {"center_x":.5, "center_y":.95}
+                            pos_hint: {"center_x":.25, "center_y":.95}
+
+                        MDIconButton:
+                            icon: "plus"
+                            adaptive_size: True
+                            pos_hint: {"center_x": .9, "center_y":.95}
+                            user_font_size: "38sp"
+                            theme_icon_color: "Custom"
+                            icon_color: "white"
+                            md_bg_color: 0,0,1/255,1
                         
                         MDSeparator:
                             height: "1dp"
@@ -438,6 +448,41 @@ d_kv = '''
                                         font_size: "12dp"
                                         elevation: 0
 
+                            MDCard:
+                                size_hint: None, None
+                                size: "155dp", "155dp"
+                                md_bg_color: 1, 1, 1, 1
+                                MDRelativeLayout:
+                                    MDIconButton:
+                                        icon: "plus"
+                                        adaptive_size: True
+                                        pos_hint: {"center_x": .8, "center_y": .8}
+                                        user_font_size: "48sp"
+                                        theme_text_color: "Custom"
+                                        md_bg_color: 0,1,100/255,1
+
+                                    MDLabel:
+                                        text: "Remitance"
+                                        halign: "center"
+                                        adaptive_size: True
+                                        font_size: "12dp"
+                                        bold: True
+                                        pos_hint: {"center_x": 0.27, "center_y": .8}
+
+                                    MDLabel:
+                                        text: "KSH 100,000"
+                                        adaptive_size: True
+                                        font_size: "20dp"
+                                        bold: True
+                                        pos_hint: {"center_x": 0.5, "center_y": .5}
+
+                                    MDFillRoundFlatButton:
+                                        text: "Explore Expenditure"
+                                        md_bg_color: (1,0,100/255,1)
+                                        pos_hint: {"center_x": .5, "center_y": .2}
+                                        font_size: "12dp"
+                                        elevation: 0
+
                         MDSeparator:
                             height: "1dp"
                             color: 1, 0, 0, 1
@@ -570,16 +615,16 @@ class FinanceScreen(MDScreen):
 
         if category == "rentals":
             # title = "Rental Properties"
-            row_data = [("Unit A", "10,000"), ("Unit B", "12,000"), ("Unit B", "12,000"), ("Unit B", "12,000"),("Unit B", "12,000"), ("Unit B", "12,000"),("Unit A", "10,000"), ("Unit B", "12,000"),("Unit A", "10,000"), ("Unit B", "12,000")]
+            row_data = [("Unit A", "10,000", "20,000"), ("Unit B", "12,000", "20,000"), ("Unit B", "12,000", "20,000")]
         elif category == "leased":
             # title = "Leased Properties"
-            row_data = [("Office 1", "50,000")]
+            row_data = [("Office 1", "50,000", "")]
         elif category == "sold":
             # title = "Sold Properties"
-            row_data = [("House X", "2,000,000")]
+            row_data = [("House X", "2,000,000", "")]
         elif category == "others":
             # title = "Other Revenues"
-            row_data = [("Parking", "3,000"), ("Penalty", "1,000")]
+            row_data = [("Parking", "3,000", ""), ("Penalty", "1,000", "")]
         else:
             # title = "Unknown"
             row_data = []
@@ -596,7 +641,7 @@ class FinanceScreen(MDScreen):
             use_pagination=True,
             rows_num=7,
             pos_hint={"center_x": 0.5, "center_y": 0.55},
-            column_data=[("Property", dp(40)), ("Amount", dp(40))],
+            column_data=[("Property", dp(30)), ("Expected Amount", dp(30)), ("Collected Amount", dp(30))],
             row_data=row_data
         )
         section.add_widget(table)
