@@ -1,0 +1,148 @@
+<AdminLoginPage>:
+    name: "login"
+    MDCard:
+        size_hint: None, None
+        size: "450dp", "600dp"
+        radius: [10,]
+        md_bg_color: (0,0,100/255,1)
+        pos_hint: {"center_x": 0.5, "center_y": 0.48}
+        
+        MDRelativeLayout:
+            MDCard:
+                size_hint: None, None
+                size: "450dp", "200dp"
+                radius: [10,10,50,50]
+                md_bg_color: (1,0,100/255,1)
+                pos_hint: {"center_x": 0.5, "center_y": 0.9}
+                    
+            MDLabel:
+                text: "Welcome Back"
+                halign: "center"
+                pos_hint: {"center_x": 0.5, "center_y": 1}
+                font_size: "34"
+                bold: True
+                color: "white"
+                    
+            MDLabel:
+                text: "Log In to Continue"
+                halign: "center"
+                pos_hint: {"center_x": 0.5, "center_y": .9}
+                font_size: "18"
+                bold: True
+                color: (0,0,100/255,1)
+                    
+            FitImage:
+                source: "asset/images/icons/adminicon.png"
+                radius: [10,0,0,0] 
+                size_hint: None, None
+                size: "130dp", "130dp"
+                pos_hint: {"center_x": .5, "center_y": .75}
+
+            MDTextField:
+                id: username
+                hint_text: "Username"
+                pos_hint: {"center_x": 0.5, "center_y": 0.55}
+                size_hint_x: 0.7
+                text_color_focus: 1,1,1,1
+                hint_text_color_normal: "white"     
+                hint_text_color_focus: .6, .6, .6, 1     
+                line_color_normal: 1, 1, 1, 1
+                line_color_focus: .6, .6, .6, 1  
+
+            MDTextField:
+                id: password
+                hint_text: "Password"
+                password: True
+                pos_hint: {"center_x": 0.5, "center_y": 0.45}
+                size_hint_x: 0.7
+                text_color_focus: 1,1,1,1
+                hint_text_color_normal: "white"       
+                hint_text_color_focus: .6, .6, .6, 1     
+                line_color_normal: 1, 1, 1, 1
+                line_color_focus: .6, .6, .6, 1 
+
+            MDRaisedButton:
+                text: "Login"
+                pos_hint: {"center_x": 0.5, "center_y": 0.35}
+                on_release: root.authenticate(username.text, password.text)
+                    
+            MDSeparator:
+                height: "1dp"
+                size_hint_x: None
+                width: "400dp"  
+                color: 1,1,1,1
+                pos_hint: {"center_x": .5, "center_y": .25}
+            
+            MDCard:
+                size_hint: None, None
+                size: "30dp", "30dp"
+                radius: [50]
+                md_bg_color: (1,1,1,1)
+                pos_hint: {"center_x": 0.5, "center_y": .25}
+                MDLabel:
+                    text: "OR"
+                    halign: "center"
+                    pos_hint: {"center_x": 0.5, "center_y": .5}
+                    font_size: "14"
+                    bold: True
+                    color: (0,0,100/255,1)
+            
+            MDLabel:
+                text: "Validate through"
+                halign: "center"
+                pos_hint: {"center_x": 0.5, "center_y": .17}
+                font_size: "16"
+                bold: True
+                color: "white"
+
+            FitImage:
+                source: "asset/images/icons/gmail.png"
+                radius: [10,0,0,0] 
+                size_hint: None, None
+                size: "30dp", "30dp"
+                pos_hint: {"center_x": .1, "center_y": .1}
+            
+            MDTextButton:
+                text: "Gmail code"
+                pos_hint: {"center_x": 0.22, "center_y": .1}
+                theme_text_color: "Custom"
+                text_color: "#FFFFFF"
+                on_release: app.change_screen('landloardprofile')
+                font_size: "14dp"
+                    
+            FitImage:
+                source: "asset/images/icons/sms.png"
+                radius: [10,0,0,0] 
+                size_hint: None, None
+                size: "30dp", "30dp"
+                pos_hint: {"center_x": .4, "center_y": .1}
+                    
+            MDTextButton:
+                text: "Sms OTP"
+                pos_hint: {"center_x": 0.52, "center_y": .1}
+                theme_text_color: "Custom"
+                text_color: "#FFFFFF"
+                on_release: app.change_screen('landloardprofile')
+                font_size: "14dp"
+                    
+            FitImage:
+                source: "asset/images/icons/auth.png"
+                radius: [10,0,0,0] 
+                size_hint: None, None
+                size: "35dp", "35dp"
+                pos_hint: {"center_x": .665, "center_y": .1}
+                    
+            MDTextButton:
+                text: "Security Question"
+                pos_hint: {"center_x": 0.83, "center_y": .1}
+                theme_text_color: "Custom"
+                text_color: "#FFFFFF"
+                on_release: app.change_screen('landloardprofile')
+                font_size: "14dp"
+                    
+            MDTextButton:
+                text: "Need Help?"
+                pos_hint: {"center_x": 0.5, "center_y": .03}
+                theme_text_color: "Custom"
+                text_color: .6, .6, .6, 1
+                font_size: "12dp"

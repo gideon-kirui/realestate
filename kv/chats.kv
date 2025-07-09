@@ -1,0 +1,28 @@
+<ChatScreen>:
+    MDBoxLayout:
+        orientation: 'vertical'
+        MDRelativeLayout:
+            MDGridLayout:
+                cols: 2
+                adaptive_height: True
+                adaptive_width: True
+                pos_hint: {"center_x": 0.5, "center_y": .5}
+                MDCard:
+                    size_hint: None, None
+                    size: "460dp", "590dp"
+                    MDRelativeLayout:
+                        MDLabel:
+                            text: "Chats"
+                            adaptive_size: True
+                            pos_hint: {"center_x": 0.15, "center_y": .97}
+
+                MDCard:
+                    size_hint: None, None
+                    size: "850dp", "590dp"
+                    md_bg_color: 0.95, 0.95, 0.95, 1
+                    orientation: 'vertical'
+                    radius: [0,0,0,0]
+                    MDRelativeLayout:
+                        MDLabel:
+                            text: "Rental Amount:"
+                            adaptive_size: True

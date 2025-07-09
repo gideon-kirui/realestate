@@ -1,7 +1,7 @@
 from kivymd.uix.screen import MDScreen
 from kivy.lang import Builder
 
-Builder.load_file("kv/tenantprofile.kv")
+Builder.load_file("kv/adminprofile.kv")
 
-class TenatntProfileScreen(MDScreen):
+class AdminAccountScreen(MDScreen):
     pass  
